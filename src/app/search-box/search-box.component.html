@@ -1,0 +1,12 @@
+<!--<label>Hey! What can I help you with?</label>
+<input type="text" class="form-control" style="width:71%" [(ngModel)]="searchQuery">-->
+<!--<button 
+    class="btn btn-primary" 
+    [hidden]="searchQuery === ''"
+    (click)= "onSubmitSearchQuery($event)">Search</button>-->
+
+<form #f="ngForm" (ngSubmit)="onSubmit(f)" novalidate>
+    <input type="text" class="form-control" style="width:71%" name="search" ngModel>
+    <button class="btn btn-primary">Search</button>
+</form>
+<p>{{ searchQuery }}</p>
