@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { NgForm } from '@angular/forms';
 
 @Component({
@@ -7,14 +7,18 @@ import { NgForm } from '@angular/forms';
   styleUrls: ['./search-box.component.css']
 })
 export class SearchBoxComponent implements OnInit {
-  searchQuery = '';
+  @Output() responseReceived = new EventEmitter();
+ // searchQuery = ''; // query to post to the server
+  searchResults = []; // results received for query from server
+
   constructor() { }
 
   ngOnInit() {
   }
   onSubmit (f: NgForm) {
-    this.searchQuery = f.value.search;
-    // console.log(f.value.search);
-    // this.searchQuery = event;
+    // console.log(f.value);
+    this.searchResults.push(f.value); // to test, change it to the response received from server
+    
+    this.responseReceived.emit(this.searchResults);
   }
 }
