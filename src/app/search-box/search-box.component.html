@@ -5,6 +5,15 @@
         style="width:71%" 
         name="searchQuery" 
         ngModel>
-    <button class="btn btn-primary hidden" type="submit">Search</button>
+    <button class="btn btn-primary" type="submit">Search</button>
+    <button 
+        class="btn btn-primary" 
+        name="btnActivateSpeechSearchMovie" 
+        id="btnActivateSpeechSearchMovie" 
+        (click)="activateSpeechSearchMovie()"
+        [disabled]="!showSearchButton">
+        start speach recoginition
+        </button>
+        <button class="btn btn-primary"(click)="stopSpeech()" >stop</button>
 </form>
 

@@ -7,6 +7,7 @@ import { SearchResultComponent } from './search-result/search-result.component';
 import { SearchResultsComponent } from './search-results/search-results.component';
 import { SearchService } from './search-box/search-service';
 import { HttpModule } from '@angular/http';
+import { SpeechRecognitionService } from './search-box/speech-service';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,7 @@ import { HttpModule } from '@angular/http';
     FormsModule,
     HttpModule
   ],
-  providers: [SearchService],
+  providers: [SearchService, SpeechRecognitionService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

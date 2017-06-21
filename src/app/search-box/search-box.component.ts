@@ -17,16 +17,58 @@ export class SearchBoxComponent implements OnInit, OnDestroy {
     "lang": "en",
     "sessionId": "1234567890"
   }
-
-  // constructor() { }
-  constructor(private searchService: SearchService ) {}
-
+  speechData: string;
+  showSearchButton: boolean;
+  constructor(private searchService: SearchService, private speechService: SpeechRecognitionService ) {
+    this.speechData = "";
+    this.showSearchButton = true;
+  }
+  
   ngOnInit() {
   }
   ngOnDestroy(){
-    
+    this.speechService.DestroySpeechObject();
   }
-  
+
+  activateSpeechSearchMovie(): void {
+        this.showSearchButton = false;
+
+        this.speechService.record()
+            .subscribe(
+            (value) => {
+                this.speechData = value;
+                console.log(value);
+            },
+            (err) => {
+                console.log(err);
+                if (err.error == "no-speech") {
+                    console.log("--restatring service--");
+                    this.activateSpeechSearchMovie();
+                }
+            },
+            () => {
+                this.showSearchButton = true;
+                console.log("--complete--");
+                // this.activateSpeechSearchMovie();
+            });
+    }
+
+    stopSpeech() {
+      this.srchQuery.query = this.speechData;
+
+      this.searchService.postQuery(this.srchQuery)
+      .subscribe(
+        (response) => {
+          let srchResponse = response.json().result.fulfillment.speech;
+          this.searchResults = [{ searchQuery: srchResponse }];
+          this.responseReceived.emit(this.searchResults);
+          console.log(this.searchResults)
+        },
+        (error) => console.log(error)
+      )
+      this.speechService.DestroySpeechObject();
+    }
+
   onSubmit (f: NgForm) {
     // console.log(f.value);
     this.srchQuery.query = f.value.searchQuery; // to test, change it to the response received from server
@@ -41,6 +83,5 @@ export class SearchBoxComponent implements OnInit, OnDestroy {
         },
         (error) => console.log(error)
       )
-   
   }
 }
