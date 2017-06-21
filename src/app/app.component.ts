@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { SearchService } from './search-service';
 
 @Component({
   selector: 'app-root',
@@ -10,6 +11,7 @@ export class AppComponent {
   results = [{searchQuery: 'Hey there mooo'},{searchQuery: 'Hey there yo'}];
   onResultsReceived(searchResults) {
     this.results = searchResults;
-    console.log(this.results);
+    console.log('here=>', this.results);
   }
+  
 }
